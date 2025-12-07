@@ -1,72 +1,78 @@
 AI-Driven Vehicle Behavior Analysis (YOLOv8)
 
-Overview
+Overview 
 
 This repository contains a complete, four-stage Python pipeline developed for analyzing vehicle speed and movement from video footage. The system uses a specialized YOLOv8 implementation to generate clean, ML-ready time-series data for quantitative research.
 
-This project was developed by Christos Perontsis (CP) under the supervision of Prof. Mohammad Shokrolah Shirazi at Marian University.
+This project was developed by Christos Perontsis under the supervision of Prof. Mohammad Shokrolah Shirazi at Marian University.
 
 Key Outputs
 
 Final Metric: Average speed and total tracking duration for every unique vehicle ID.
 
-Validation: Clean, chronological time-series data suitable for advanced predictive models (LSTM/GRU).
+Data Structure: Clean, chronological time-series data suitable for advanced predictive models (LSTM/GRU).
 
 🚀 Getting Started
 
 Prerequisites
 
-Clone the Repository:
-
-git clone [Your Repository URL Here]
-cd [Your Repository Name]
-
-
-Setup Environment: Create a Python 3.10+ virtual environment and install dependencies.
-
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-
+Environment Setup: Create a Python 3.10+ virtual environment and install dependencies (requirements.txt).
 
 Model Weights: Ensure the YOLOv8 nano weights (yolov8n.pt) are downloaded and placed in the project root directory.
 
 Execution Instructions (The 4-Step Pipeline)
 
-The following scripts must be run sequentially from the root of the project directory.
+The following scripts are located in the /Scripts/ directory and must be run sequentially.
 
-Step 0: Data Collection & Raw Output
+Step
 
-Runs the YOLOv8 tracker on the input video, generates the annotated video, and outputs the raw, unsorted data.
+Script Name
 
-python Scripts/Object\ Detection\ Tracker.py
+Function
+
+Output File
+
+0. DATA COLLECTION
+
+Object Detection Tracker.py
+
+Runs YOLO, outputs raw data and video.
+
+tracked_objects_data.csv
+
+1. DATA PREPARATION
+
+PrepareDataForML.py
+
+Cleans & Sorts Data (Converts, sorts by ID/Frame).
+
+ml_ready_tracking_data.csv
+
+2. CALCULATION
+
+speed_calculator.py
+
+Per-Frame Speed (Calculates distance and speed/sec).
+
+tracking_with_speed.csv
+
+3. AGGREGATION
+
+average_speed_analysis.py
+
+Final Summary (Calculates the average speed per car ID).
+
+car_average_speed_summary.csv
+
+📊 Optional Data Formatting (Visualization)
+
+The following utility script is optional and designed purely for visualization purposes. It converts the clean, vertical data into specialized horizontal formats.
+
+Utility 1: Pivot Trajectories for Visualization
+
+This script creates a unique horizontal file (horizontal_trajectories.csv) where each row is a single car ID followed by its entire chronological X, Y coordinate path. This is useful for plotting all car paths onto a single graph.
+
+python Scripts/Transform_Updated.py
 
 
-Output: tracked_objects_data.csv (Raw data)
-
-Step 1: Data Cleaning & Sorting (ML Preparation)
-
-This is the critical preprocessing step that converts data to numbers and sorts all vehicle observations chronologically (by ID then by Frame) for time-series analysis.
-
-python Scripts/PrepareDataForML.py
-
-
-Output: ml_ready_tracking_data.csv (Clean & Sorted)
-
-Step 2: Per-Frame Speed Calculation
-
-Calculates the pixel distance and instantaneous speed (pixels per second) for every single frame-to-frame movement in the video (using the 25 FPS rate).
-
-python Scripts/speed_calculator.py
-
-
-Output: tracking_with_speed.csv (Data with per-frame speed metrics)
-
-Step 3: Final Metric Aggregation (The Research Result)
-
-Calculates the final statistical summary: the average speed and total duration for each unique car ID.
-
-python Scripts/average_speed_analysis.py
-
-
-Final Output: car_average_speed_summary.csv (The conclusive report table)
+Output: horizontal_trajectories.csv (One row per car ID, showing all X, Y coordinates).
