@@ -1,0 +1,8 @@
+Core Libraries
+
+opencv-python
+ultralytics
+pandas # Recommended for quick data handling/analysis of final CSVs
+numpy
+scipy # Used by some underlying YOLO utilities
+matplotlib # Used for visualization/plotting

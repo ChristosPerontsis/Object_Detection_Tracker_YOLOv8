@@ -1,0 +1,29 @@
+--- Python Virtual Environment ---
+
+.venv
+venv
+*.pyc
+
+--- YOLO/OpenCV Output Files ---
+
+Ignore the model weights (YOLO)
+
+*.pt
+*.pth
+
+Ignore all generated video files
+
+*.mp4
+*.avi
+
+Ignore all large data outputs
+
+tracking_with_speed.csv
+ml_ready_tracking_data.csv
+horizontal_trajectories.csv
+car_average_speed_summary.csv
+
+Ignore logs and runs directories
+
+runs/
+pycache/
